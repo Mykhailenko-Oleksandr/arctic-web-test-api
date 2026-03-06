@@ -1,5 +1,6 @@
 import { Joi, Segments } from 'celebrate';
 import { isValidObjectId } from 'mongoose';
+import { TAGS } from '../constants/tags.js';
 
 const objectIdValidator = (value, helpers) => {
   return !isValidObjectId(value) ? helpers.message('Invalid id format') : value;
@@ -24,7 +25,10 @@ export const createSnippetSchema = {
   [Segments.BODY]: Joi.object({
     title: Joi.string().min(1).required(),
     content: Joi.string().min(10).required(),
-    tag: Joi.array().items(Joi.string()).default([]),
+    tag: Joi.array()
+      .items(Joi.string().valid(...TAGS))
+      .min(1)
+      .default(['Other']),
     type: Joi.string().valid('Link', 'Note', 'Command').required(),
   }),
 };
@@ -36,6 +40,6 @@ export const updateSnippetSchema = {
   [Segments.BODY]: Joi.object({
     title: Joi.string().min(1),
     content: Joi.string().min(10),
-    tag: Joi.array().items(Joi.string()),
+    tag: Joi.array().items(Joi.string().valid(...TAGS)),
   }).min(1),
 };
