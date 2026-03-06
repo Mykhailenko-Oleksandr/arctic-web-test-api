@@ -29,7 +29,7 @@ export const createSnippetSchema = {
   }),
 };
 
-export const updateNoteSchema = {
+export const updateSnippetSchema = {
   [Segments.PARAMS]: Joi.object({
     snippetId: Joi.string().custom(objectIdValidator).required(),
   }),

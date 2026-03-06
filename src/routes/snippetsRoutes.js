@@ -12,7 +12,7 @@ import {
   createSnippetSchema,
   getAllSnippetsSchema,
   snippetIdSchema,
-  updateNoteSchema,
+  updateSnippetSchema,
 } from '../validations/snippersValidation.js';
 
 const router = Router();
@@ -30,7 +30,7 @@ router.delete(
 
 router.patch(
   '/snippets/:snippetId',
-  celebrate(updateNoteSchema),
+  celebrate(updateSnippetSchema),
   updateSnippet,
 );
 

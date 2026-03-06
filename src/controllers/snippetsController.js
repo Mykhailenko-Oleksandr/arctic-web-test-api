@@ -36,5 +36,19 @@ export const deleteSnippet = async (req, res) => {
 };
 
 export const updateSnippet = async (req, res) => {
-  res.status(200).json('ok');
+  const { snippetId } = req.params;
+
+  if (!req.body) {
+    throw createHttpError(400, 'There must be data to update');
+  }
+
+  const snippet = await Snippet.findByIdAndUpdate(snippetId, req.body, {
+    new: true,
+  });
+
+  if (!snippet) {
+    throw createHttpError(404, 'Snippet not found');
+  }
+
+  res.status(200).json(snippet);
 };
