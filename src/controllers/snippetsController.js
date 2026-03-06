@@ -2,7 +2,31 @@ import createHttpError from 'http-errors';
 import { Snippet } from '../models/snippet.js';
 
 export const getAllSnippet = async (req, res) => {
-  res.status(200).json('ok');
+  const { page = 1, limit = 10, q, tag } = req.query;
+
+  const snippetQuery = Snippet.find();
+
+  const skip = (page - 1) * limit;
+
+  if (q) {
+    snippetQuery.or([
+      { title: { $regex: q, $options: 'i' } },
+      { content: { $regex: q, $options: 'i' } },
+    ]);
+  }
+
+  if (tag) {
+    snippetQuery.where('tag').equals(tag);
+  }
+
+  const [totalSnippets, snippets] = await Promise.all([
+    snippetQuery.clone().countDocuments(),
+    snippetQuery.skip(skip).limit(limit),
+  ]);
+
+  const totalPages = Math.ceil(totalSnippets / limit);
+
+  res.status(200).json({ page, limit, totalSnippets, totalPages, snippets });
 };
 
 export const getSnippetById = async (req, res) => {
