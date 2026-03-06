@@ -7,16 +7,31 @@ import {
   getSnippetById,
   updateSnippet,
 } from '../controllers/snippetsController.js';
+import { celebrate } from 'celebrate';
+import {
+  createSnippetSchema,
+  getAllSnippetsSchema,
+  snippetIdSchema,
+  updateNoteSchema,
+} from '../validations/sampleValidation.js';
 
 const router = Router();
 
-router.get('/snippets', getAllSnippet);
-router.get('/snippets/:noteId', getSnippetById);
+router.get('/snippets', celebrate(getAllSnippetsSchema), getAllSnippet);
+router.get('/snippets/:snippetId', celebrate(snippetIdSchema), getSnippetById);
 
-router.post('/snippets', createSnippet);
+router.post('/snippets', celebrate(createSnippetSchema), createSnippet);
 
-router.delete('/snippets/:noteId', deleteSnippet);
+router.delete(
+  '/snippets/:snippetId',
+  celebrate(snippetIdSchema),
+  deleteSnippet,
+);
 
-router.patch('/snippets/:noteId', updateSnippet);
+router.patch(
+  '/snippets/:snippetId',
+  celebrate(updateNoteSchema),
+  updateSnippet,
+);
 
 export default router;
