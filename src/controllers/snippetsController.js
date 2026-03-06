@@ -6,7 +6,14 @@ export const getAllSnippet = async (req, res) => {
 };
 
 export const getSnippetById = async (req, res) => {
-  res.status(200).json('ok');
+  const { snippetId } = req.params;
+  const snippet = await Snippet.findById(snippetId);
+
+  if (!snippet) {
+    throw createHttpError(404, 'Snippet not found');
+  }
+
+  res.status(200).json(snippet);
 };
 
 export const createSnippet = async (req, res) => {
