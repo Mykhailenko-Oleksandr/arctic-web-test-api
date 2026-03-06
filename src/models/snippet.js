@@ -18,8 +18,7 @@ const snippetSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ['Link' | 'Note' | 'Command'],
-      default: 'Note',
+      enum: ['Link', 'Note', 'Command'],
       required: true,
     },
   },

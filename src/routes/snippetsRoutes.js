@@ -13,7 +13,7 @@ import {
   getAllSnippetsSchema,
   snippetIdSchema,
   updateNoteSchema,
-} from '../validations/sampleValidation.js';
+} from '../validations/snippersValidation.js';
 
 const router = Router();
 

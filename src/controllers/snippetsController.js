@@ -1,3 +1,5 @@
+import { Snippet } from '../models/snippet.js';
+
 export const getAllSnippet = async (req, res) => {
   res.status(200).json('ok');
 };
@@ -7,7 +9,11 @@ export const getSnippetById = async (req, res) => {
 };
 
 export const createSnippet = async (req, res) => {
-  res.status(200).json('ok');
+  const snippet = await Snippet.create({
+    ...req.body,
+  });
+
+  res.status(201).json(snippet);
 };
 
 export const deleteSnippet = async (req, res) => {
