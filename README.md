@@ -102,6 +102,24 @@ npm start
 }
 ```
 
+### Оновити snippet
+
+- **PATCH** /api/snippets/:snippetId
+- Body (JSON):
+
+```json
+{
+  "title": "Оновлений заголовок",
+  "content": "Оновлений текст",
+  "tag": ["Personal"],
+  "type": "Link"
+}
+```
+
+### Видалити snippet
+
+- **DELETE** /api/snippets/:snippetId
+
 ## 🌐 Тестовий деплой
 
 Демо‑версія доступна за посиланням:
