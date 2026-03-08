@@ -23,8 +23,8 @@ export const getAllSnippetsSchema = {
 
 export const createSnippetSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).required(),
-    content: Joi.string().min(10).required(),
+    title: Joi.string().min(1).max(50).required(),
+    content: Joi.string().min(10).max(100).required(),
     tag: Joi.array()
       .items(Joi.string().valid(...TAGS))
       .min(1)
@@ -38,8 +38,12 @@ export const updateSnippetSchema = {
     snippetId: Joi.string().custom(objectIdValidator).required(),
   }),
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1),
-    content: Joi.string().min(10),
-    tag: Joi.array().items(Joi.string().valid(...TAGS)),
-  }).min(1),
+    title: Joi.string().min(1).max(50).required(),
+    content: Joi.string().min(10).max(100).required(),
+    tag: Joi.array()
+      .items(Joi.string().valid(...TAGS))
+      .min(1)
+      .default(['Other']),
+    type: Joi.string().valid('Link', 'Note', 'Command').required(),
+  }),
 };

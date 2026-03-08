@@ -21,7 +21,7 @@ export const getAllSnippet = async (req, res) => {
 
   const [totalSnippets, snippets] = await Promise.all([
     snippetQuery.clone().countDocuments(),
-    snippetQuery.skip(skip).limit(limit),
+    snippetQuery.skip(skip).limit(limit).sort({ updatedAt: -1 }),
   ]);
 
   const totalPages = Math.ceil(totalSnippets / limit);
